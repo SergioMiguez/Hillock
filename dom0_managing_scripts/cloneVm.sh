@@ -1,15 +1,19 @@
+########################
+# Cloning VM Script
+########################
+
+
 #!/bin/bash
 
-
-ORIGIN_VM=Alpine		# VM to be cloned
-CLONE_VM_NAME=alpineAuto	# New VM name
+source_vm=Alpine
+clone_vm_name=alpineAuto
 
 # Clonnig VM
-qvm-clone $ORIGIN_VM $CLONE_VM_NAME
+qvm-clone $source_vm $clone_vm_name
 
 # Starting new Cloned VM
-qvm-run $CLONE_VM_NAME
+qvm-run $clone_vm_name
 
 # Report Network Settings to be set.
-qvm-ls -n $CLONE_VM_NAME
+qvm-ls -n $clone_vm_name
 

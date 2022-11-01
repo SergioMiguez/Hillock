@@ -1,27 +1,34 @@
+#########################
+# CREATE HVM STANDALONE VM 
+#	Assume iso of Alpine in {untrusted} qube at "/home/user/Downloads/" 
+#########################
+
+
 #!/bin/bash
 
-TYPE=StandaloneVM	# Type of VM
-NAME=alpineAuto 	# Name of new VM
-COLOR=green		# GUI label color
-VMODE=hvm		# Hardware Virtual Machine
-INIT_RAM=190		# Initial given RAM to the VM in MB
-#RAM=160 		# After installation RAM in MB
+vm_type=StandaloneVM	# Type of VM
+name=alpineAuto 	# Name of new VM
+color=green		# GUI label color
+vm_mode=hvm		# Hardware Virtual Machine
+init_ram=190		# Initial given RAM to the VM in MB
 
 # Creating VM
-qvm-create -v --class $TYPE --label $COLOR --property virt_mode=$VMODE $NAME
+qvm-create -v --class $vm_type --label $color --property virt_mode=$vm_mode $name
 
 # Setting VM preferentces
 # RAM configuration
-qvm-prefs $NAME memory $INIT_RAM
-qvm-prefs $NAME maxmem $INIT_RAM
+qvm-prefs $name memory $init_ram
+qvm-prefs $name maxmem $init_ram
 # Kernel configuration
-qvm-prefs $NAME kernel ''
+qvm-prefs $name kernel ''
 
 # Starting VM using Alpine ISO located at the Untrusted Qube
-qvm-start -v --cdrom=untrusted:/home/user/Downloads/alpine.iso $NAME
+qvm-start -v --cdrom=untrusted:/home/user/Downloads/alpine.iso $name
 
 # Reporting VM Creation and Configuration
-virsh -c xen:/// dominfo $NAME 
+virsh -c xen:/// dominfo $name
 # Reporting VM Network Configuration (IP and Gateway) to be manually set later in Network Congiguration inside VM
-qvm-ls -n $NAME
+qvm-ls -n $name
+
+echo "DONE"
 
