@@ -9,62 +9,106 @@
 #!/bin/bash 
 # replace with kernel version, the custom build is for that version
 # changing the version is made on your own risk!! (it might not work)
+
 KERNEL_VERSION=linux-5.15.91
+echo Your Current Kernel version is $(uname -r)
+
+read -p 'Select new Kernel: [Y=$KERNEL_VERSION, or type kernel version] ' USER_KERNEL
+if [ "$USER_KERNEL" != "Y" ]; then
+	KERNEL_VERSION=$USER_KERNEL
+fi
+
+echo Installing $KERNEL_VERSION
+
 # replace where the boot system is
 DISK=/dev/sda
+echo Printing Disk Partitions:
+$(fdisk -l)
+read -p 'Select disk with boot: [Y=$DISK, or type disk] ' USER_DISK
+if [ "$USER_DISK" != "Y" ]; then
+	DISK=$USER_DISK
+fi
 
-#echo Getting Updates
-#doas apk update 
-#doas apk upgrade
+echo Selected Disk: $DISK 
+read -p 'Install required packages? [Y/n] ' USER_PKG
+if [ "$USER_PKG" = "Y" ]; then
+	echo Installing packages
+	apk add alpine-sdk 
+	apk add xz
+	apk add ncurses-dev
+	apk add bison
+	apk add flex
+	apk add bc
+	apk add perl
+	apk add libelf
+	apk add elfutils-dev
+	apk add openssl-dev
+	apk add findutils
+	apk add linux-headers
+	apk add pkgconfig
+	apk add installkernel
+else
+	echo Skipped packages install
+fi
 
-
-echo Installing packages
-doas apk add alpine-sdk 
-doas apk add xz
-doas apk add ncurses-dev
-doas apk add bison
-doas apk add flex
-doas apk add bc
-doas apk add perl
-doas apk add libelf
-doas apk add elfutils-dev
-doas apk add openssl-dev
-doas apk add findutils
-doas apk add linux-headers
-doas apk add pkgconfig
-doas apk add installkernel
-
-echo Getting kernel= $KERNEL_VERSION
 REPOSITORY=$(pwd)
-cd 
-doas wget https://cdn.kernel.org/pub/linux/kernel/v5.x/$KERNEL_VERSION.tar.xz
-tar -xvf $KERNEL_VERSION.tar.xz
-cd $KERNEL_VERSION
-doas make clean
-doas make defconfig
+cd
 
-# Important, kernel only for x86 and only 64-bit systems with no 32-bit compatibility
-echo replacing .config file
-doas cp -fr $REPOSITORY/.config .
+read -p 'Download kernel (to path ~/) [Y/n]: ' USER_DWN
+if [ "$USER_DWN" = "Y" ]; then
+	echo Getting kernel= $KERNEL_VERSION 
+	wget https://cdn.kernel.org/pub/linux/kernel/v5.x/$KERNEL_VERSION.tar.xz
+	tar -xvf $KERNEL_VERSION.tar.xz
+	cd $KERNEL_VERSION
+	make clean
+	make defconfig
+fi
 
-echo MAKING
-doas make -j $(nproc)
+read -p 'Compile Kernel: [Y/n] ' USER_MK
+if [ "$USER_MK" = "Y" ]; then
+	# Important, kernel only for x86 and only 64-bit systems with no 32-bit compatibility
+	echo replacing .config file
+	cp -fr $REPOSITORY/.config .
 
-echo MAKE modules_install
-doas make modules_install -j $(nproc)
+	echo MAKING
+	make -j $(nproc)
+fi
 
-echo MAKE install
-doas make install -j $(nproc)
+read -p 'Install Kernel? [Y/n] ' USER_INSTALL
+if [ "$USER_INSTALL" = "Y" ]; then 
+	echo MAKE modules_install
+	make modules_install -j $(nproc)
 
+	echo MAKE install
+	make install -j $(nproc)
+fi
 
-: '
-echo Updating bootloader
-doas apk del syslinux
-doas apk add grub 
-doas apk add grub-bios
-grub-install $DISK
-echo -e "GRUB_TIMEOUT=0" >> /etc/grub.d/40_custom
-doas grub-mkconfig -o /boot/grub/grub.cfg
-doas reboot
-'
+read -p 'Update Bootloader? [Y/n] (required to end install) ' USER_BOOT
+if [ "$USER_ROOT" = "Y" ]; then
+	echo Updating bootloader
+	apk del syslinux
+	apk add grub 
+	apk add grub-bios
+	grub-install $DISK
+
+	read -p 'Skip Grub Timeout? [Y/n]' USER_SKIP
+
+	if [ "$USER_SKIP" = "Y" ]; then
+		echo -e "GRUB_TIMEOUT=0" >> /etc/grub.d/40_custom
+	fi
+
+	grub-mkconfig -o /boot/grub/grub.cfg
+fi 
+
+read -p 'Clean/delete install files? [Y/n] ' USER_DEL
+if [ "$USER_DEL" = "Y" ]; then
+	cd 
+	rm -r $KERNEL_VERSION $KERNEL_VERSION.tar.xz
+fi
+
+read -p 'Reboot? [Y/n] ' USER_REBOOT
+if [ "$USER_REBOOT" = "Y" ]; then
+	reboot
+fi
 echo DONE
+
