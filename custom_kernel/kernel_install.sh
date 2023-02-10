@@ -13,9 +13,9 @@ KERNEL_VERSION=linux-5.15.91
 # replace where the boot system is
 DISK=/dev/sda
 
-echo Getting Updates
-doas apk update 
-doas apk upgrade
+#echo Getting Updates
+#doas apk update 
+#doas apk upgrade
 
 
 echo Installing packages
@@ -27,10 +27,11 @@ doas apk add flex
 doas apk add bc
 doas apk add perl
 doas apk add libelf
+doas apk add elfutils-dev
 doas apk add openssl-dev
 doas apk add findutils
 doas apk add linux-headers
-doas apk add pkconfig-dev
+doas apk add pkgconfig
 doas apk add installkernel
 
 echo Getting kernel= $KERNEL_VERSION
@@ -42,7 +43,6 @@ cd $KERNEL_VERSION
 doas make clean
 doas make defconfig
 
-: '
 # Important, kernel only for x86 and only 64-bit systems with no 32-bit compatibility
 echo replacing .config file
 doas cp -fr $REPOSITORY/.config .
@@ -56,6 +56,8 @@ doas make modules_install -j $(nproc)
 echo MAKE install
 doas make install -j $(nproc)
 
+
+: '
 echo Updating bootloader
 doas apk del syslinux
 doas apk add grub 
