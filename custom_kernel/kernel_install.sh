@@ -62,6 +62,10 @@ if [[ "$USER_DWN" = "Y" || "$USER_DWN" = "" ]]; then
 	echo Getting kernel= $KERNEL_VERSION 
 	wget https://cdn.kernel.org/pub/linux/kernel/v5.x/$KERNEL_VERSION.tar.xz
 	tar -xvf $KERNEL_VERSION.tar.xz
+fi
+
+read -p 'Decompres Kernel: [Y/n] ' USER_DECOMPRESS
+if [[ "$USER_MK" = "Y" || "$USER_MK" = "" ]]; then
 	cd $KERNEL_VERSION
 	make clean
 	make defconfig
@@ -69,6 +73,7 @@ fi
 
 read -p 'Compile Kernel: [Y/n] ' USER_MK
 if [[ "$USER_MK" = "Y" || "$USER_MK" = "" ]]; then
+	cd $KERNEL_VERSION
 	# Important, kernel only for x86 and only 64-bit systems with no 32-bit compatibility
 	echo replacing .config file
 	cp -fr $REPOSITORY/.config .
@@ -83,6 +88,7 @@ fi
 
 read -p 'Install Kernel? [Y/n] ' USER_INSTALL
 if [[ "$USER_INSTALL" = "Y" || "$USER_INSTALL" = "" ]]; then 
+	cd $KERNEL_VERSION
 	echo MAKE modules_install
 	read -p 'Number of processing units to use? [Y=nproc/input number] ' USER_THREADS_
 	if [[ "$USER_THREADS_" = "Y" || "$USER_THREADS_" = "" ]]; then
