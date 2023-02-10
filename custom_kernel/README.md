@@ -1,6 +1,6 @@
 # This custom kernel was developed for Alpine Linux to optimise bootup time in Qubes OS
 
-WARNING!! RUN THIS IN AN EMPTY MACHINE FIRST 
+WARNING!! RUN THIS IN AN EMPTY MACHINE FIRST
 
 BACKUP EVERYTHING
 
@@ -8,14 +8,13 @@ RUN THIS AT YOUR OWN RISK!
 
 IN CASE OF FAILURE YOUR MACHINE WONT BOOT
 
-
 ### **Kernel version 5.15.91**
 
 ##### Run the kernel_install.sh script:
 
-To run the scrip use the following command:
+```To run the scrip use the following command:su -c ./kernel_install.sh
 
-`su -c ./kernel_install.sh`
+```
 
 Follow the instructions and make decisions using Y/Enter, n or input values.
 
