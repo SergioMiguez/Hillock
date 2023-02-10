@@ -27,9 +27,11 @@ echo Installing Base Kernel: $KERNEL_VERSION
 DISK=/dev/sda
 echo Printing Disk Partitions:
 fdisk -l
-read -p 'Select disk with boot: [Y='"$DISK"', or type disk] ' USER_DISK
-if [[ "$USER_DISK" != "Y" && "$USER_DISK" != "" ]]; then
+read -p 'Select disk with boot: [Windows=Y='"$DISK"', Qubes OS=Q=/dev/xvda, or type disk] ' USER_DISK
+if [[ "$USER_DISK" != "Y" && "$USER_DISK" != "Q" && "$USER_DISK" != "" ]]; then
 	DISK=$USER_DISK
+elif [[ "$USER_DISK" = "Q" ]]; then
+	DISK=/dev/xvda
 fi
 
 echo Selected Disk: $DISK 
