@@ -1,10 +1,13 @@
 # WARNING!! RUN THIS IN AN EMPTY MACHINE FIRST
 # BACKUP EVERYTHING 
-# RUN THIS ON YOUR OWN RISK!
+# RUN THIS AT YOUR OWN RISK!
 # IN CASE OF FAILURE YOUR MACHINE WONT BOOT
 
 # SERGIO MIGUEZ APARICIO 2023 - University of Edinburgh
 
+# TO RUN THE SCRIPT USE: 
+#       su -c ./kernel_install.sh
+# AND FOLLOW THE INSTRUCTIONS
 
 #!/bin/bash 
 # replace with kernel version, the custom build is for that version
@@ -18,7 +21,7 @@ if [[ "$USER_KERNEL" != "Y" && "$USER_KERNEL" != "" ]]; then
 	KERNEL_VERSION=$USER_KERNEL
 fi
 
-echo Installing $KERNEL_VERSION
+echo Installing Base Kernel: $KERNEL_VERSION
 
 # replace where the boot system is
 DISK=/dev/sda
