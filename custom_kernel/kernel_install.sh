@@ -65,7 +65,7 @@ if [[ "$USER_DWN" = "Y" || "$USER_DWN" = "" ]]; then
 fi
 
 read -p 'Decompres Kernel: [Y/n] ' USER_DECOMPRESS
-if [[ "$USER_MK" = "Y" || "$USER_MK" = "" ]]; then
+if [[ "$USER_DECOMPRESS" = "Y" || "$USER_DECOMPRESS" = "" ]]; then
 	cd $KERNEL_VERSION
 	make clean
 	make defconfig
