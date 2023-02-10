@@ -77,10 +77,15 @@ fi
 read -p 'Install Kernel? [Y/n] ' USER_INSTALL
 if [ "$USER_INSTALL" = "Y" ]; then 
 	echo MAKE modules_install
-	make modules_install -j $(nproc)
+    read -p 'Number of processing units to use? [Y=nproc/input number] ' USER_THREADS
+    if [ "$USER_THREADS" = "Y" ]; then
+        USER_THREADS=$(nproc)
+    fi
+    echo Using $USER_THREADS processing units
+	make modules_install -j $USER_THREADS
 
 	echo MAKE install
-	make install -j $(nproc)
+	make install -j $USER_THREADS
 fi
 
 read -p 'Update Bootloader? [Y/n] (required to end install) ' USER_BOOT
