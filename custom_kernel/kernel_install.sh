@@ -104,7 +104,7 @@ if [[ "$USER_INSTALL" = "Y" || "$USER_INSTALL" = "" ]]; then
 fi
 
 read -p 'Update Bootloader? [Y/n] (required to end install) ' USER_BOOT
-if [[ "$USER_ROOT" = "Y" || "$USER_BOOT" = "" ]]; then
+if [[ "$USER_BOOT" = "Y" || "$USER_BOOT" = "" ]]; then
 	echo Updating bootloader
 	apk del syslinux
 	apk add grub 
