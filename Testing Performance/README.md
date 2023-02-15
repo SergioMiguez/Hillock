@@ -1,3 +1,5 @@
+# Testing Boot Up Time of Kernel
+
 To measure the boot up time, place timer.sh in the /root folder and update the crond config file using:
 
 ```Crond
