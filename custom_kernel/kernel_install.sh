@@ -78,7 +78,7 @@ if [[ "$USER_MK" = "Y" || "$USER_MK" = "" ]]; then
 	cd $KERNEL_VERSION
 	# Important, kernel only for x86 and only 64-bit systems with no 32-bit compatibility
 	echo replacing .config file
-	cp -fr $REPOSITORY/.config .
+	cp -fr $REPOSITORY/.config_v50_final ./.config
 	
 	read -p 'Number of processing units to use? [Y=nproc/input number] ' USER_THREADS
 	if [[ "$USER_THREADS" = "Y" || "$USER_THREADS" = "" ]]; then
