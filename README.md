@@ -8,7 +8,7 @@ Hillock has been developed through an iterative process, where non-required conf
 ----
 
 ----
-Project developed by Sergio Miguez Aparicio (University of Edinburgh) under the supervision of Antonio Barbalache (University of Edinburgh) and Pierre Olivier (Univerity of Manchester) - 2022/2023
+Project developed by [Sergio Miguez Aparicio](https://www.linkedin.com/in/sergio-miguez/) (University of Edinburgh) under the supervision of [Antonio Barbalache](https://www.linkedin.com/in/antonio-barbalace-172400b/) (University of Edinburgh) and [Pierre Olivier](https://www.linkedin.com/in/pierre-olivier-9a897544/) (Univerity of Manchester) - 2022/2023
 
 ----
 
