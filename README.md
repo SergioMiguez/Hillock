@@ -5,6 +5,12 @@ Lightweightness is a fundamental property and goal to achieve in many virtualisa
 
 Hillock has been developed through an iterative process, where non-required configuration, modules, and drivers were removed. Afterwards, the kernel was tested against the most common alternatives in the [Qubes OS](https://www.qubes-os.org/) environment, including the [Qubes OS](https://www.qubes-os.org/) PVH templates, Debian minimal (PVH) or [Alpine Linux](https://www.alpinelinux.org/) (HVM). More than 650 boot ups of different configurations were recorded to check Hillock’s improvement. Finally, our kernel was proven to be 1.29 times faster than the fastest alternative (Debian Minimal PVH) and 1.80 times lighter than the lightest alternative ([Alpine Linux](https://www.alpinelinux.org/)), becoming a starting point for further research.
 
+----
+
+Project developed by Sergio Miguez Aparicio (University of Edinburgh) under the supervision of Antonio Barbalache (University of Edinburgh) and Pierre Olivier (Univerity of Manchester) - 2022/2023
+
+----
+
 ## Repository structure 
 ### Hillock Kernel
 Contains the final configuration file to install the Kernel (.config_Hillock) and the script to install Hillock in an automated way. Inside Hillock config file folder, there is guidance to manually install the system.
