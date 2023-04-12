@@ -56,6 +56,9 @@ else
 	echo Skipped packages install
 fi
 
+INSTALL_FOLDER_REPOSITORY=$(pwd)
+cd $INSTALL_FOLDER_REPOSITORY
+cd ..
 REPOSITORY=$(pwd)
 cd
 
@@ -78,7 +81,7 @@ if [[ "$USER_MK" = "Y" || "$USER_MK" = "" ]]; then
 	cd $KERNEL_VERSION
 	# Important, kernel only for x86 and only 64-bit systems with no 32-bit compatibility
 	echo replacing .config file
-	cp -fr $REPOSITORY/.config_v50_final ./.config
+	cp -fr $REPOSITORY/Hillock_config_file/.config_Hillock ./.config
 	
 	read -p 'Number of processing units to use? [Y=nproc/input number] ' USER_THREADS
 	if [[ "$USER_THREADS" = "Y" || "$USER_THREADS" = "" ]]; then
